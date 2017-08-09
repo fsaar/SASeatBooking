@@ -12,6 +12,7 @@
 		563232651F3A08330032F044 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 563232631F3A08330032F044 /* Main.storyboard */; };
 		563232671F3A08330032F044 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 563232661F3A08330032F044 /* Assets.xcassets */; };
 		5632326A1F3A08330032F044 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 563232681F3A08330032F044 /* LaunchScreen.storyboard */; };
+		563232721F3A09140032F044 /* SASeatBookingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563232711F3A09140032F044 /* SASeatBookingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		563232661F3A08330032F044 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		563232691F3A08330032F044 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5632326B1F3A08330032F044 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		563232711F3A09140032F044 /* SASeatBookingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SASeatBookingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				5632325F1F3A08330032F044 /* AppDelegate.swift */,
 				563232611F3A08330032F044 /* ViewController.swift */,
+				563232711F3A09140032F044 /* SASeatBookingView.swift */,
 				563232631F3A08330032F044 /* Main.storyboard */,
 				563232661F3A08330032F044 /* Assets.xcassets */,
 				563232681F3A08330032F044 /* LaunchScreen.storyboard */,
@@ -137,6 +140,7 @@
 			files = (
 				563232621F3A08330032F044 /* ViewController.swift in Sources */,
 				563232601F3A08330032F044 /* AppDelegate.swift in Sources */,
+				563232721F3A09140032F044 /* SASeatBookingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
