@@ -1,10 +1,4 @@
-//
-//  SASeatBookingView.swift
-//  SASeatBooking
-//
-//  Created by Frank Saar on 08/08/2017.
-//  Copyright © 2017 SAMedialabs. All rights reserved.
-//
+
 import Foundation
 import UIKit
 import SceneKit
@@ -13,9 +7,21 @@ typealias SASeatPosition = (column: Int,row: Int)
 typealias SASeatBookingSize = (columns: Int,rows :Int)
 
 enum SASeatBookingType : Int {
+
     case occupied
     case available
     case space
+    
+    var color : UIColor {
+        switch self {
+        case .occupied:
+            return UIColor.red.withAlphaComponent(0.85)
+        case .available:
+            return UIColor.green
+        case .space:
+            return .clear
+        }
+    }
 }
 
 protocol SASeatBookingViewDatasource : class {
@@ -27,13 +33,14 @@ protocol SASeatBookingViewDelegate : class {
     func seatBookingView(_ view: SASeatBookingView,didTapSeatAt position: SASeatPosition)
 }
 
-// 1. Add Subscript
-// 2. add Generator
 class SASeatBookingView: SCNView {
     let offset = CGPoint.zero
     let seatToSeatDistance = (x:CGFloat(2),z:CGFloat(10))
+    var defaultSeatSize = (width: CGFloat(10),height:CGFloat(10),length:CGFloat(10))
+    fileprivate lazy var seatFactory = SASeatFactory(width: self.defaultSeatSize.width,height:self.defaultSeatSize.height,length:self.defaultSeatSize.length)
+
     lazy var originNode : SCNNode = SCNNode()
-    
+
     lazy var lightNode : SCNNode = {
         let light = SCNLight()
         light.type = .directional
@@ -82,35 +89,13 @@ class SASeatBookingView: SCNView {
         super.init(coder: aDecoder)
         setup()
         self.allowsCameraControl = true
+        self.showsStatistics = true
     }
     
     weak var seatDelegate : SASeatBookingViewDelegate?
     
-    var defaultSeatSize = (width: CGFloat(10),height:CGFloat(10),length:CGFloat(10))
-    
-    lazy var occupiedSeat : SCNBox = {
-        let occupiedSeat = SCNBox(width: self.defaultSeatSize.width, height: self.defaultSeatSize.height, length: self.defaultSeatSize.length, chamferRadius: 2)
-        occupiedSeat.materials.first!.diffuse.contents = UIColor.red.withAlphaComponent(0.85)
-        return occupiedSeat
-    }()
-
-    lazy var availableSeat : SCNBox =  {
-        let availableSeat = SCNBox(width: self.defaultSeatSize.width, height: self.defaultSeatSize.height, length: self.defaultSeatSize.length, chamferRadius: 2)
-        availableSeat.materials.first!.diffuse.contents = UIColor.green
-        return availableSeat
-    }()
-    
     func dequeueNode(of type:SASeatBookingType) -> SCNNode {
-        let seatNode = SCNNode()
-        
-        switch type {
-        case .available:
-            seatNode.geometry = self.availableSeat
-        case .occupied:
-            seatNode.geometry = self.occupiedSeat
-        case .space:
-            seatNode.isHidden = true
-        }
+        let seatNode = self.seatNode(of: type)
         return seatNode
     }
     
@@ -140,7 +125,24 @@ fileprivate extension SASeatBookingView {
                                                -Float(z) * (Float(defaultSeatSize.length)+Float(self.seatToSeatDistance.z)) + Float(offset.y))
             originNode.addChildNode(seatNode)
         }
-        originNode.flattenedClone() 
+        originNode.flattenedClone()
+    }
+    
+    func seatNode(of type: SASeatBookingType) -> SCNNode {
+        let seatNode = SCNNode()
+        var seat : SCNGeometry?
+        switch type {
+        case .available:
+            seat = seatFactory.availableSeat
+        case .occupied:
+            seat = seatFactory.occupiedSeat
+        case .space:
+            seatNode.isHidden = true
+            seat = nil
+        }
+        seat?.materials.first?.diffuse.contents = type.color
+        seatNode.geometry = seat
+        return seatNode
     }
     
 }

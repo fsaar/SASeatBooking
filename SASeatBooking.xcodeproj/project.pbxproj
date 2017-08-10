@@ -14,6 +14,7 @@
 		5632326A1F3A08330032F044 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 563232681F3A08330032F044 /* LaunchScreen.storyboard */; };
 		563232721F3A09140032F044 /* SASeatBookingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563232711F3A09140032F044 /* SASeatBookingView.swift */; };
 		5689E1D21F3B775E00D6AC1C /* SASeatBookingViewIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5689E1D11F3B775E00D6AC1C /* SASeatBookingViewIterator.swift */; };
+		5689E1D71F3CBA2400D6AC1C /* SASeatFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5689E1D61F3CBA2400D6AC1C /* SASeatFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		5632326B1F3A08330032F044 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		563232711F3A09140032F044 /* SASeatBookingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SASeatBookingView.swift; sourceTree = "<group>"; };
 		5689E1D11F3B775E00D6AC1C /* SASeatBookingViewIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SASeatBookingViewIterator.swift; sourceTree = "<group>"; };
+		5689E1D61F3CBA2400D6AC1C /* SASeatFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SASeatFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,14 +62,23 @@
 			children = (
 				5632325F1F3A08330032F044 /* AppDelegate.swift */,
 				563232611F3A08330032F044 /* ViewController.swift */,
-				563232711F3A09140032F044 /* SASeatBookingView.swift */,
-				5689E1D11F3B775E00D6AC1C /* SASeatBookingViewIterator.swift */,
+				5689E1D51F3CB9FE00D6AC1C /* SASeatBookingView */,
 				563232631F3A08330032F044 /* Main.storyboard */,
 				563232661F3A08330032F044 /* Assets.xcassets */,
 				563232681F3A08330032F044 /* LaunchScreen.storyboard */,
 				5632326B1F3A08330032F044 /* Info.plist */,
 			);
 			path = SASeatBooking;
+			sourceTree = "<group>";
+		};
+		5689E1D51F3CB9FE00D6AC1C /* SASeatBookingView */ = {
+			isa = PBXGroup;
+			children = (
+				5689E1D11F3B775E00D6AC1C /* SASeatBookingViewIterator.swift */,
+				563232711F3A09140032F044 /* SASeatBookingView.swift */,
+				5689E1D61F3CBA2400D6AC1C /* SASeatFactory.swift */,
+			);
+			path = SASeatBookingView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,6 +152,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5689E1D71F3CBA2400D6AC1C /* SASeatFactory.swift in Sources */,
 				563232621F3A08330032F044 /* ViewController.swift in Sources */,
 				563232601F3A08330032F044 /* AppDelegate.swift in Sources */,
 				563232721F3A09140032F044 /* SASeatBookingView.swift in Sources */,
