@@ -19,9 +19,18 @@ class ViewController: UIViewController {
     }
     
     let seatMap : [[SASeatBookingType]]  = [
-        [.occupied,.available,.available],
-        [.available,.available,.space],
-        [.available,.occupied,.occupied]]
+        [.occupied,.available,.available,.occupied,.available,.available],
+        [.available,.available,.space,.occupied,.available,.available],
+        [.available,.available,.space,.occupied,.available,.available],
+        [.available,.available,.space,.occupied,.available,.available],
+        [.available,.available,.space,.occupied,.available,.available],
+        [.available,.available,.space,.occupied,.available,.available],
+        [.available,.available,.space,.occupied,.available,.available],
+        [.available,.available,.space,.occupied,.available,.available],
+        [.available,.available,.space,.occupied,.available,.available],
+        [.available,.available,.space,.occupied,.available,.available],
+        [.available,.available,.space,.occupied,.available,.available],
+        [.available,.occupied,.occupied,.occupied,.available,.available]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,14 +40,13 @@ class ViewController: UIViewController {
 
 extension ViewController : SASeatBookingViewDatasource {
     func numberOfRowsAndColumnsInSeatBookingView(_ view : SASeatBookingView) -> SASeatBookingSize {
-        return (3,3)
+        return (self.seatMap.count,self.seatMap.first?.count ?? 0)
     }
     
-    func seatBookingView(_ view: SASeatBookingView,at position:  SASeatPosition) -> SASeatBookingType {
-        return seatMap[position.row][position.column]
-    }
-    
-    func seatBookingView(_ view: SASeatBookingView,node: SCNNode,for position: SASeatPosition) {
+    func seatBookingView(_ view: SASeatBookingView,nodeAt position:  SASeatPosition) -> SCNNode {
+        let type = seatMap[position.row][position.column]
+        let node = view.dequeueNode(of: type)
+        return node
     }
 
 }

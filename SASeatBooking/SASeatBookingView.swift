@@ -20,53 +20,12 @@ enum SASeatBookingType : Int {
 
 protocol SASeatBookingViewDatasource : class {
     func numberOfRowsAndColumnsInSeatBookingView(_ view : SASeatBookingView) -> SASeatBookingSize
-    func seatBookingView(_ view: SASeatBookingView,at position:  SASeatPosition) -> SASeatBookingType
-    func seatBookingView(_ view: SASeatBookingView,node: SCNNode,for position: SASeatPosition)
+    func seatBookingView(_ view: SASeatBookingView,nodeAt position:  SASeatPosition) -> SCNNode
 }
 
 protocol SASeatBookingViewDelegate : class {
     func seatBookingView(_ view: SASeatBookingView,didTapSeatAt position: SASeatPosition)
 }
-
-struct SASeatBookingViewIterator : IteratorProtocol {
-    let size : SASeatBookingSize
-    var currentPosition : SASeatPosition?
-    init(size : SASeatBookingSize) {
-        self.size = size
-        self.currentPosition = (0,0)
-    }
-    
-    mutating func next() -> SASeatPosition? {
-        
-        guard let position = self.currentPosition else {
-            return nil
-        }
-        
-        let (newColumn,newRow) = position
-        if newColumn < size.columns-1 {
-            self.currentPosition = (newColumn+1,newRow)
-        }
-        else if newRow < size.rows-1 {
-            self.currentPosition = (0,newRow+1)
-        }
-        else {
-            self.currentPosition = nil
-        }
-        return position
-    }
-}
-
-struct SASeatBookingSequence : Sequence {
-    let size : SASeatBookingSize
-    init(size : SASeatBookingSize) {
-        self.size = size
-    }
-    
-    func makeIterator() -> SASeatBookingViewIterator {
-        return SASeatBookingViewIterator(size:self.size)
-    }
-}
-
 
 // 1. Add Subscript
 // 2. add Generator
@@ -85,6 +44,7 @@ class SASeatBookingView: SCNView {
     
     lazy var cameraNode : SCNNode = {
         let camera = SCNCamera()
+        camera.zFar = 500
         let cameraNode = SCNNode()
         cameraNode.camera = camera
         cameraNode.addChildNode(lightNode)
@@ -107,7 +67,6 @@ class SASeatBookingView: SCNView {
     }()
     
     
-    
     weak var seatDataSource : SASeatBookingViewDatasource? = nil {
         didSet {
             setupSetMap()
@@ -122,6 +81,7 @@ class SASeatBookingView: SCNView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
+        self.allowsCameraControl = true
     }
     
     weak var seatDelegate : SASeatBookingViewDelegate?
@@ -140,7 +100,22 @@ class SASeatBookingView: SCNView {
         return availableSeat
     }()
     
+    func dequeueNode(of type:SASeatBookingType) -> SCNNode {
+        let seatNode = SCNNode()
+        
+        switch type {
+        case .available:
+            seatNode.geometry = self.availableSeat
+        case .occupied:
+            seatNode.geometry = self.occupiedSeat
+        case .space:
+            seatNode.isHidden = true
+        }
+        return seatNode
+    }
+    
     func reloadData() {
+        self.originNode.childNodes.forEach { $0.removeFromParentNode() }
         setupSetMap()
     }
 }
@@ -159,22 +134,13 @@ fileprivate extension SASeatBookingView {
         }
         let size = seatDataSource.numberOfRowsAndColumnsInSeatBookingView(self)
         for (z,x) in SASeatBookingSequence(size: size) {
-            let type = seatDataSource.seatBookingView(self, at: (column:x,row:z))
-            let seatNode = SCNNode()
-            
-            switch type {
-            case .available:
-                seatNode.geometry = self.availableSeat
-            case .occupied:
-                seatNode.geometry = self.occupiedSeat
-            case .space:
-                seatNode.isHidden = true
-            }
+            let seatNode = seatDataSource.seatBookingView(self, nodeAt: (column:x,row:z))
             seatNode.position = SCNVector3Make(Float(x) * (Float(defaultSeatSize.width) + Float(self.seatToSeatDistance.x)) + Float(offset.x),
                                                Float(defaultSeatSize.height)/2,
                                                -Float(z) * (Float(defaultSeatSize.length)+Float(self.seatToSeatDistance.z)) + Float(offset.y))
             originNode.addChildNode(seatNode)
         }
+        originNode.flattenedClone() 
     }
     
 }
