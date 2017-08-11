@@ -10,7 +10,7 @@ typealias SASeatBookingSize = (columns: Int,rows :Int)
 
 protocol SASeatBookingViewDatasource : class {
     func numberOfRowsAndColumnsInSeatBookingView(_ view : SASeatBookingView) -> SASeatBookingSize
-    func seatBookingView(_ view: SASeatBookingView,nodeAt position:  SASeatPosition) -> SCNNode
+    func seatBookingView(_ view: SASeatBookingView,nodeAt position:  SASeatPosition) -> SCNNode?
 }
 
 protocol SASeatBookingViewDelegate : class {
@@ -104,17 +104,17 @@ fileprivate extension SASeatBookingView {
         }
         let size = seatDataSource.numberOfRowsAndColumnsInSeatBookingView(self)
         for (z,x) in SASeatBookingSequence(size: size) {
-            let seatNode = seatDataSource.seatBookingView(self, nodeAt: (column:x,row:z))
-            let box = seatNode.boundingBox
-            let width = box.max.x - box.min.x
-            let length = box.max.z - box.min.z
-            seatNode.position = SCNVector3Make(Float(x) * (Float(width) + Float(self.seatToSeatDistance.x)) + Float(offset.x),
-                                               -Float(box.min.y),
-                                               -Float(z) * (Float(length)+Float(self.seatToSeatDistance.z)) + Float(offset.y))
-            originNode.addChildNode(seatNode)
+            if let seatNode = seatDataSource.seatBookingView(self, nodeAt: (column:x,row:z)) {
+                let box = seatNode.boundingBox
+                let width = box.max.x - box.min.x
+                let length = box.max.z - box.min.z
+                seatNode.position = SCNVector3Make(Float(x) * (Float(width) + Float(self.seatToSeatDistance.x)) + Float(offset.x),
+                                                   -Float(box.min.y),
+                                                   -Float(z) * (Float(length)+Float(self.seatToSeatDistance.z)) + Float(offset.y))
+                originNode.addChildNode(seatNode)
+            }
         }
-        originNode.flattenedClone()
+        originNode = originNode.flattenedClone()
     }
-    
 
 }

@@ -35,13 +35,12 @@ extension ViewController : SASeatBookingViewDatasource {
         return (self.seatMap.count,self.seatMap.first?.count ?? 0)
     }
     
-    func seatBookingView(_ view: SASeatBookingView,nodeAt position:  SASeatPosition) -> SCNNode {
+    func seatBookingView(_ view: SASeatBookingView,nodeAt position:  SASeatPosition) -> SCNNode? {
         let type = seatMap[position.row][position.column]
-        let node = self.seatFactory.seat(of:type)
-        
         guard type != .space else {
-            return node
+            return nil
         }
+        let node = self.seatFactory.seat(of:type)
         let title = self.title(for: position)
         let titleNode = self.titleNode(with: title)
         node.addChildNode(titleNode)

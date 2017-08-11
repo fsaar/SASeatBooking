@@ -65,7 +65,6 @@ class SASeatFactory {
         seatNode.geometry = seat
         restNode.geometry = rest
         restNode.position = SCNVector3Make(0, Float(self.seatSize.height * 7/8), -Float(self.seatSize.length/3))
-        node.flattenedClone()
         return node
     }
 
