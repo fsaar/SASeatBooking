@@ -2,6 +2,7 @@
 import Foundation
 import UIKit
 import SceneKit
+import SceneKit.ModelIO
 
 typealias SASeatPosition = (column: Int,row: Int)
 typealias SASeatBookingSize = (columns: Int,rows :Int)
@@ -11,17 +12,6 @@ enum SASeatBookingType : Int {
     case occupied
     case available
     case space
-    
-    var color : UIColor {
-        switch self {
-        case .occupied:
-            return UIColor.red.withAlphaComponent(0.85)
-        case .available:
-            return UIColor.green
-        case .space:
-            return .clear
-        }
-    }
 }
 
 protocol SASeatBookingViewDatasource : class {
@@ -33,11 +23,19 @@ protocol SASeatBookingViewDelegate : class {
     func seatBookingView(_ view: SASeatBookingView,didTapSeatAt position: SASeatPosition)
 }
 
+protocol SASeatFactoryProtocol {
+    var availableSeat : SCNGeometry { get }
+    var occupiedSeat : SCNGeometry { get }
+    var availableRest : SCNGeometry { get }
+    var occupiedRest : SCNGeometry { get }
+}
+
 class SASeatBookingView: SCNView {
+    var save : Bool = false
     let offset = CGPoint.zero
-    let seatToSeatDistance = (x:CGFloat(2),z:CGFloat(10))
-    var defaultSeatSize = (width: CGFloat(10),height:CGFloat(10),length:CGFloat(10))
-    fileprivate lazy var seatFactory = SASeatFactory(width: self.defaultSeatSize.width,height:self.defaultSeatSize.height,length:self.defaultSeatSize.length)
+    let seatToSeatDistance = (x:CGFloat(0.2),z:CGFloat(1))
+    var defaultSeatSize = (width: CGFloat(1),height:CGFloat(1),length:CGFloat(1))
+    lazy var seatFactory : SASeatFactoryProtocol = SASeatFactory(width: self.defaultSeatSize.width,height:self.defaultSeatSize.height,length:self.defaultSeatSize.length)
 
     lazy var originNode : SCNNode = SCNNode()
 
@@ -66,8 +64,7 @@ class SASeatBookingView: SCNView {
         floorMaterial.diffuse.contents =   UIColor.white //"Circles.jpg";
     
         let floor = SCNFloor()
-        floor.reflectionFalloffEnd = 3.0
-        floor.firstMaterial? = floorMaterial
+        floor.firstMaterial?.diffuse.contents = UIColor.lightGray
         let floorNode = SCNNode()
         floorNode.geometry = floor
         return floorNode
@@ -110,6 +107,7 @@ fileprivate extension SASeatBookingView {
         self.scene = SCNScene()
         self.scene?.rootNode.addChildNode(self.originNode)
         self.scene?.rootNode.addChildNode(self.cameraNode)
+        self.scene?.rootNode.addChildNode(self.floorNode)
     }
     
     func setupSetMap() {
@@ -129,20 +127,28 @@ fileprivate extension SASeatBookingView {
     }
     
     func seatNode(of type: SASeatBookingType) -> SCNNode {
+        let restNode = SCNNode()
         let seatNode = SCNNode()
+        let node = SCNNode()
+        node.addChildNode(seatNode)
+        node.addChildNode(restNode)
         var seat : SCNGeometry?
+        var rest : SCNGeometry?
         switch type {
         case .available:
             seat = seatFactory.availableSeat
+            rest = seatFactory.availableRest
         case .occupied:
             seat = seatFactory.occupiedSeat
+            rest = seatFactory.occupiedRest
         case .space:
             seatNode.isHidden = true
             seat = nil
         }
-        seat?.materials.first?.diffuse.contents = type.color
         seatNode.geometry = seat
-        return seatNode
+        restNode.geometry = rest
+        restNode.position = SCNVector3Make(0, Float(self.defaultSeatSize.height * 7/8), -Float(self.defaultSeatSize.length/3))
+        node.flattenedClone()
+        return node
     }
-    
 }
