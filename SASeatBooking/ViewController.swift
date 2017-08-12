@@ -47,11 +47,25 @@ extension ViewController : SASeatBookingViewDatasource {
         return node
     }
     
+    func badge() -> SCNNode {
+        let plane = SCNPlane(width: 0.8, height: 0.6)
+        plane.cornerRadius = 0.2
+        plane.materials.first?.diffuse.contents = #imageLiteral(resourceName: "gold")
+        plane.materials.first?.emission.contents = UIColor.yellow
+        plane.materials.first?.specular.contents = UIColor.white
+        let node = SCNNode()
+        node.geometry = plane
+        node.position = SCNVector3Make(0, 1, 0.3)
+        return node
+    }
+    
+    
+    
     func title(for position : SASeatPosition) -> String {
         guard let letter = UnicodeScalar(65+position.column) else {
             return ""
         }
-        let title = "\(position.row)\(letter)"
+        let title = "\(position.row+1)\(letter)"
         return title
     }
     
@@ -60,7 +74,6 @@ extension ViewController : SASeatBookingViewDatasource {
         title.firstMaterial?.diffuse.contents = UIColor.white
         title.font = UIFont.systemFont(ofSize: 2)
         title.flatness = 0.1
-        
         let titleNode = SCNNode()
         titleNode.geometry = title
         titleNode.scale = SCNVector3Make(0.2,0.2,0.2)
@@ -68,7 +81,10 @@ extension ViewController : SASeatBookingViewDatasource {
         titleNode.rotation = SCNVector4Make(1, 0, 0, -Float(Double.pi / 4))
         let middleText = (titleNode.boundingBox.max.x - titleNode.boundingBox.min.x) / 10
         titleNode.position = SCNVector3Make(-middleText, 0.5, 0.3)
-        return titleNode
+        let node = SCNNode()
+        node.addChildNode(self.badge())
+        node.addChildNode(titleNode)
+        return node
     }
 
 }
