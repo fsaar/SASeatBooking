@@ -52,8 +52,11 @@ extension ViewController : SASeatBookingViewDatasource {
     }
     
     func seatBookingView(_ view: SASeatBookingView,nodeAt position:  SASeatPosition) -> SCNNode? {
-        let type = seatMap[position.row][position.column]
-        let seatLabel = self.label(for: position)
+        let row = seatMap[position.row]
+        let type = row[position.column]
+        let columnOffset = row[0..<position.column].filter ({ $0 == .space }).count
+        let labelPosition = (column: position.column - columnOffset,row: position.row)
+        let seatLabel = self.label(for: labelPosition)
         guard type != .space, let seat = self.seatFactory.seatNode(of: type,with: seatLabel) else {
             return nil
         }
