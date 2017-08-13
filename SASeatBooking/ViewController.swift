@@ -35,11 +35,11 @@ extension ViewController : SASeatBookingViewDatasource {
     
     func seatBookingView(_ view: SASeatBookingView,nodeAt position:  SASeatPosition) -> SCNNode? {
         let type = seatMap[position.row][position.column]
-         let title = self.title(for: position)
-        guard type != .space, let seat = self.seatFactory.seatNode(of: type,with: title) else {
+        let seatLabel = self.label(for: position)
+        guard type != .space, let seat = self.seatFactory.seatNode(of: type,with: seatLabel) else {
             return nil
         }
-       return seat
+        return seat
     }
 }
 
@@ -51,12 +51,12 @@ extension ViewController : SASeatBookingViewDelegate {
 
 /// MARK : Help
 extension ViewController {
-    func title(for position : SASeatPosition) -> String {
+    func label(for position : SASeatPosition) -> String {
         guard let letter = UnicodeScalar(65+position.column) else {
             return ""
         }
-        let title = "\(position.row+1)\(letter)"
-        return title
+        let label = "\(position.row+1)\(letter)"
+        return label
     }
 
 }

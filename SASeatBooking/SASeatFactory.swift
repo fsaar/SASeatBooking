@@ -24,11 +24,11 @@ class SASeatFactory {
         return self.seat(with : #imageLiteral(resourceName: "greenChenille"))
     }()
 
-    func seatNode(of type: SASeatFactoryType,with title: String) -> SCNNode? {
+    func seatNode(of type: SASeatFactoryType,with label: String) -> SCNNode? {
         guard let node = node(with: type) else {
             return nil
         }
-        updateBadge(of: node,with:title)
+        updateBadge(of: node,with:label)
         return node
     }
 
@@ -48,9 +48,9 @@ extension SASeatFactory {
         }
     }
     
-    func updateBadge(of node: SCNNode,with title: String) {
+    func updateBadge(of node: SCNNode,with label: String) {
         let badge  = node.childNode(withName: SASeatFactoryLabel.badge.rawValue, recursively: true)
-        let image = self.image(with: title)
+        let image = self.image(with: label)
         badge?.geometry?.firstMaterial?.diffuse.contents = image
     }
     
