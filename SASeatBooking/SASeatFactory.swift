@@ -50,10 +50,10 @@ extension SASeatFactory {
     
     func updateBadge(of node: SCNNode,with label: String) {
         guard let oldBadge = node.childNode(withName: SASeatFactoryLabel.badge.rawValue, recursively: true),
-            let newNode = seat(with: UIImage())?.childNode(withName: SASeatFactoryLabel.badge.rawValue, recursively: true) else {
+            let sources = oldBadge.geometry?.sources, let elements = oldBadge.geometry?.elements else {
             return
         }
-        oldBadge.geometry = newNode.geometry
+        oldBadge.geometry = SCNGeometry(sources: sources, elements:elements)
         oldBadge.geometry?.firstMaterial?.diffuse.contents = self.image(with: label)
     }
     
@@ -71,11 +71,11 @@ extension SASeatFactory {
     }
     
     func image(with title: String) -> UIImage {
-        let bounds = CGRect(origin:.zero, size: CGSize(width: 100, height: 40))
+        let bounds = CGRect(origin:.zero, size: CGSize(width: 100, height: 50))
         let format = UIGraphicsImageRendererFormat()
         format.opaque = true
         let renderer = UIGraphicsImageRenderer(bounds: bounds,format: format)
-        let image =  #imageLiteral(resourceName: "leather")
+        let image =  #imageLiteral(resourceName: "redCarpet")
         return renderer.image { context in
             
             image.draw(in: bounds)
