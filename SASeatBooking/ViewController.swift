@@ -21,11 +21,29 @@ class ViewController: UIViewController {
     }
     
     let seatMap : [[SASeatFactoryType]]  = [
-        [.available,.available,.occupied],
-        [.available,.available,.occupied],
-        [.available,.available,.occupied],
-        [.available,.available,.occupied],
-        [.available,.available,.occupied]]
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        [.available,.available,.occupied,.space,.available,.available,.occupied,.space,.available,.available,.occupied],
+        ]
 }
 
 extension ViewController : SASeatBookingViewDatasource {

@@ -49,9 +49,12 @@ extension SASeatFactory {
     }
     
     func updateBadge(of node: SCNNode,with label: String) {
-        let badge  = node.childNode(withName: SASeatFactoryLabel.badge.rawValue, recursively: true)
-        let image = self.image(with: label)
-        badge?.geometry?.firstMaterial?.diffuse.contents = image
+        guard let oldBadge = node.childNode(withName: SASeatFactoryLabel.badge.rawValue, recursively: true),
+            let newNode = seat(with: UIImage())?.childNode(withName: SASeatFactoryLabel.badge.rawValue, recursively: true) else {
+            return
+        }
+        oldBadge.geometry = newNode.geometry
+        oldBadge.geometry?.firstMaterial?.diffuse.contents = self.image(with: label)
     }
     
     func seat(with materialImage : UIImage) -> SCNNode? {
