@@ -11,7 +11,7 @@ import SceneKit
 
 class ViewController: UIViewController {
     var defaultSeatSize = (width: CGFloat(1),height:CGFloat(1),length:CGFloat(1))
-    lazy var seatFactory = SASeatFactory(width: self.defaultSeatSize.width,height:self.defaultSeatSize.height,length:self.defaultSeatSize.length)
+    lazy var seatFactory = SASeatFactory()
 
     @IBOutlet var sceneView : SASeatBookingView! = nil {
         didSet {
@@ -21,13 +21,11 @@ class ViewController: UIViewController {
     }
     
     let seatMap : [[SASeatFactoryType]]  = [
-        [.available,.available,.occupied,.space,.available,.available,.available,.available,.available,.space,.available,.available,.available,],
-        [.available,.available,.occupied,.space,.available,.available,.available,.available,.available,.space,.available,.available,.available,],[.available,.available,.occupied,.space,.available,.available,.available,.available,.available,.space,.available,.available,.available,],[.available,.available,.occupied,.space,.available,.available,.available,.available,.available,.space,.available,.available,.available,],[.available,.available,.occupied,.space,.available,.available,.available,.available,.available,.space,.available,.available,.available,],[.available,.available,.occupied,.space,.available,.available,.available,.available,.available,.space,.available,.available,.available,],[.available,.available,.occupied,.space,.available,.available,.available,.available,.available,.space,.available,.available,.available,],[.available,.available,.occupied,.space,.available,.available,.available,.available,.available,.space,.available,.available,.available,],[.available,.available,.occupied,.space,.available,.available,.available,.available,.available,.space,.available,.available,.available,],[.available,.available,.occupied,.space,.available,.available,.available,.available,.available,.space,.available,.available,.available,],[.available,.available,.occupied,.space,.available,.available,.available,.available,.available,.space,.available,.available,.available,],[.available,.available,.occupied,.space,.available,.available,.available,.available,.available,.space,.available,.available,.available,],[.available,.available,.occupied,.space,.available,.available,.available,.available,.available,.space,.available,.available,.available,],[.available,.available,.occupied,.space,.available,.available,.available,.available,.available,.space,.available,.available,.available,]]
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-     
-    }
+        [.available,.available,.occupied],
+        [.available,.available,.occupied],
+        [.available,.available,.occupied],
+        [.available,.available,.occupied],
+        [.available,.available,.occupied]]
 }
 
 extension ViewController : SASeatBookingViewDatasource {
@@ -37,30 +35,22 @@ extension ViewController : SASeatBookingViewDatasource {
     
     func seatBookingView(_ view: SASeatBookingView,nodeAt position:  SASeatPosition) -> SCNNode? {
         let type = seatMap[position.row][position.column]
-        guard type != .space else {
+         let title = self.title(for: position)
+        guard type != .space, let seat = self.seatFactory.seatNode(of: type,with: title) else {
             return nil
         }
-        let node = self.seatFactory.seat(of:type)
-        let title = self.title(for: position)
-        let titleNode = self.titleNode(with: title)
-        node.addChildNode(titleNode)
-        return node
+       return seat
     }
-    
-    func badge() -> SCNNode {
-        let plane = SCNPlane(width: 0.8, height: 0.6)
-        plane.cornerRadius = 0.2
-        plane.materials.first?.diffuse.contents = #imageLiteral(resourceName: "gold")
-        plane.materials.first?.emission.contents = UIColor.yellow
-        plane.materials.first?.specular.contents = UIColor.white
-        let node = SCNNode()
-        node.geometry = plane
-        node.position = SCNVector3Make(0, 1, 0.3)
-        return node
+}
+
+extension ViewController : SASeatBookingViewDelegate {
+    func seatBookingView(_ view: SASeatBookingView,didTapSeatAt position: SASeatPosition) {
+        
     }
-    
-    
-    
+}
+
+/// MARK : Help
+extension ViewController {
     func title(for position : SASeatPosition) -> String {
         guard let letter = UnicodeScalar(65+position.column) else {
             return ""
@@ -68,30 +58,6 @@ extension ViewController : SASeatBookingViewDatasource {
         let title = "\(position.row+1)\(letter)"
         return title
     }
-    
-    func titleNode(with title: String) -> SCNNode {
-        let title = SCNText(string: title, extrusionDepth: 0.1)
-        title.firstMaterial?.diffuse.contents = UIColor.white
-        title.font = UIFont.systemFont(ofSize: 2)
-        title.flatness = 0.1
-        let titleNode = SCNNode()
-        titleNode.geometry = title
-        titleNode.scale = SCNVector3Make(0.2,0.2,0.2)
-        titleNode.geometry?.firstMaterial?.shininess = 0
-        titleNode.rotation = SCNVector4Make(1, 0, 0, -Float(Double.pi / 4))
-        let middleText = (titleNode.boundingBox.max.x - titleNode.boundingBox.min.x) / 10
-        titleNode.position = SCNVector3Make(-middleText, 0.5, 0.3)
-        let node = SCNNode()
-        node.addChildNode(self.badge())
-        node.addChildNode(titleNode)
-        return node
-    }
 
-}
-
-extension ViewController : SASeatBookingViewDelegate {
-    func seatBookingView(_ view: SASeatBookingView,didTapSeatAt position: SASeatPosition) {
-        
-    }
 }
 

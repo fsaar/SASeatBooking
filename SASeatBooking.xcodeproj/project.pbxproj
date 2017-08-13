@@ -15,7 +15,7 @@
 		563232721F3A09140032F044 /* SASeatBookingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 563232711F3A09140032F044 /* SASeatBookingView.swift */; };
 		5689E1D21F3B775E00D6AC1C /* SASeatBookingViewIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5689E1D11F3B775E00D6AC1C /* SASeatBookingViewIterator.swift */; };
 		5689E1D71F3CBA2400D6AC1C /* SASeatFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5689E1D61F3CBA2400D6AC1C /* SASeatFactory.swift */; };
-		5689E1DE1F3D638600D6AC1C /* SceneKit Scene.scn in Resources */ = {isa = PBXBuildFile; fileRef = 5689E1DD1F3D638600D6AC1C /* SceneKit Scene.scn */; };
+		5689E1DE1F3D638600D6AC1C /* Seat.scn in Resources */ = {isa = PBXBuildFile; fileRef = 5689E1DD1F3D638600D6AC1C /* Seat.scn */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +29,7 @@
 		563232711F3A09140032F044 /* SASeatBookingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SASeatBookingView.swift; sourceTree = "<group>"; };
 		5689E1D11F3B775E00D6AC1C /* SASeatBookingViewIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SASeatBookingViewIterator.swift; sourceTree = "<group>"; };
 		5689E1D61F3CBA2400D6AC1C /* SASeatFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SASeatFactory.swift; sourceTree = "<group>"; };
-		5689E1DD1F3D638600D6AC1C /* SceneKit Scene.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "SceneKit Scene.scn"; sourceTree = "<group>"; };
+		5689E1DD1F3D638600D6AC1C /* Seat.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = Seat.scn; sourceTree = "<group>"; };
 		5689E1E01F3D711900D6AC1C /* redCarpet.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = redCarpet.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -69,7 +69,7 @@
 				5689E1D51F3CB9FE00D6AC1C /* SASeatBookingView */,
 				563232631F3A08330032F044 /* Main.storyboard */,
 				563232661F3A08330032F044 /* Assets.xcassets */,
-				5689E1DD1F3D638600D6AC1C /* SceneKit Scene.scn */,
+				5689E1DD1F3D638600D6AC1C /* Seat.scn */,
 				5689E1E01F3D711900D6AC1C /* redCarpet.jpg */,
 				563232681F3A08330032F044 /* LaunchScreen.storyboard */,
 				5632326B1F3A08330032F044 /* Info.plist */,
@@ -144,7 +144,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5689E1DE1F3D638600D6AC1C /* SceneKit Scene.scn in Resources */,
+				5689E1DE1F3D638600D6AC1C /* Seat.scn in Resources */,
 				5632326A1F3A08330032F044 /* LaunchScreen.storyboard in Resources */,
 				563232671F3A08330032F044 /* Assets.xcassets in Resources */,
 				563232651F3A08330032F044 /* Main.storyboard in Resources */,
