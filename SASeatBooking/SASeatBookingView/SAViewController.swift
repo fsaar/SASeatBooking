@@ -12,7 +12,12 @@ import SceneKit
 class SAViewController: UIViewController {
     var defaultSeatSize = (width: CGFloat(1),height:CGFloat(1),length:CGFloat(1))
     lazy var seatFactory = SASeatFactory()
-    
+    var badgeAction : SCNAction = {
+        let action1 = SCNAction.move(by: SCNVector3Make(0, 0.5, 0.5), duration: 0.25)
+        let action2 = SCNAction.move(by: SCNVector3Make(0, 1, -1), duration: 0.5)
+        let action = SCNAction.sequence([action1,action2])
+        return action
+    }()
     @IBOutlet var sceneView : SASeatBookingView! = nil {
         didSet {
             self.sceneView.seatDataSource = self
@@ -69,6 +74,10 @@ extension SAViewController {
         if let body =  node.childNode(withName: SASeatFactoryLabel.body.rawValue, recursively: true) {
             let action = show ? SCNAction.fadeOpacity(to: 1, duration: 1) : SCNAction.fadeOpacity(to: 0, duration: 1)
             body.runAction(action)
+        }
+        if let badge =  node.childNode(withName: SASeatFactoryLabel.badge.rawValue, recursively: true) {
+            let action = show ? self.badgeAction : self.badgeAction.reversed()
+            badge.runAction(action)
         }
     }
     

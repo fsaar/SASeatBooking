@@ -75,10 +75,9 @@ class SASeatBookingView: SCNView {
     
     lazy var floorNode : SCNNode = {
         let floorMaterial = SCNMaterial()
-        floorMaterial.diffuse.contents =   UIColor.white //"Circles.jpg";
     
         let floor = SCNFloor()
-        floor.firstMaterial?.diffuse.contents = UIColor.lightGray
+        floor.firstMaterial?.diffuse.contents = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
         let floorNode = SCNNode()
         floorNode.geometry = floor
         return floorNode
@@ -104,8 +103,6 @@ class SASeatBookingView: SCNView {
         self.allowsCameraControl = true
         self.showsStatistics = true
     }
-    
-    
     
     func reloadData() {
         self.originNode.childNodes.forEach { $0.removeFromParentNode() }
