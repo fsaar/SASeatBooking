@@ -14,15 +14,20 @@ enum SASeatFactoryLabel : String {
     case seat
     case rest
     case badge
+    case body
 }
 
 class SASeatFactory {
     lazy var occupiedSeatNode : SCNNode? = {
-        return self.seat(with : #imageLiteral(resourceName: "redchenille"))
+        let seat = self.seat(with : #imageLiteral(resourceName: "redchenille"))
+        return seat
     }()
     lazy var availableSeatNode : SCNNode? = {
-        return self.seat(with : #imageLiteral(resourceName: "greenChenille"))
+        let seat =  self.seat(with : #imageLiteral(resourceName: "greenChenille"))
+        return seat
     }()
+    
+ 
 
     func seatNode(of type: SASeatFactoryType,with label: String) -> SCNNode? {
         guard let node = node(with: type) else {
@@ -37,6 +42,15 @@ class SASeatFactory {
 /// MARK: Helper
 
 extension SASeatFactory {
+    var body : SCNNode?  {
+        let url = Bundle.main.url(forResource: "Seat", withExtension: "scn")
+        guard let seatURL = url,let scene = try? SCNScene(url: seatURL, options: nil) else {
+            return nil
+        }
+        let bodyNode = scene.rootNode.childNode(withName: "body", recursively: true)
+        return bodyNode
+    }
+    
     func node(with type : SASeatFactoryType) -> SCNNode? {
         switch type {
         case .available:
