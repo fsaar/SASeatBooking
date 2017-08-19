@@ -51,6 +51,7 @@ extension SAViewController : SASeatBookingViewDelegate {
     }
     
     func seatBookingView(_ view: SASeatBookingView,didSelect seat : SCNNode,  at position: SASeatPosition) {
+        addBodyIfNeedBe(to: seat)
         animated(show: true, bodyOf: seat)
     }
     func seatBookingView(_ view: SASeatBookingView,didDeselect seat : SCNNode, at position: SASeatPosition) {
@@ -70,7 +71,6 @@ extension SAViewController {
     }
     
     func animated(show : Bool,bodyOf node: SCNNode) {
-        addBodyIfNeedBe(to: node)
         if let body =  node.childNode(withName: SASeatFactoryLabel.body.rawValue, recursively: true) {
             let action = show ? SCNAction.fadeOpacity(to: 1, duration: 1) : SCNAction.fadeOpacity(to: 0, duration: 1)
             body.runAction(action)
