@@ -41,9 +41,10 @@ class SASeatBookingView: SCNView {
         required init?(coder aDecoder: NSCoder) {
             seatPosition = (column: 0, row:0)
             super.init(coder: aDecoder)
+            
         }
     }
-    var save : Bool = false
+    var cameraControl : SACameraControl?
     let offset = CGPoint.zero
     let seatToSeatDistance = (x:CGFloat(0.2),z:CGFloat(1))
     lazy var originNode : SCNNode = SCNNode()
@@ -52,6 +53,7 @@ class SASeatBookingView: SCNView {
         moveUp.timingMode = .easeOut
         return moveUp
     }()
+   
     
     lazy var lightNode : SCNNode = {
         let light = SCNLight()
@@ -68,7 +70,6 @@ class SASeatBookingView: SCNView {
         cameraNode.camera = camera
         cameraNode.addChildNode(lightNode)
         cameraNode.position = SCNVector3Make(5, 60, 20)
-        cameraNode.constraints = [SCNLookAtConstraint(target:originNode)]
         cameraNode.addChildNode(self.lightNode)
         return cameraNode
     }()
@@ -87,8 +88,7 @@ class SASeatBookingView: SCNView {
     weak var seatDelegate : SASeatBookingViewDelegate?
     weak var seatDataSource : SASeatBookingViewDatasource? = nil {
         didSet {
-            setupSetMap()
-            
+            setupSeatMap()
         }
     }
     
@@ -100,13 +100,13 @@ class SASeatBookingView: SCNView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
-        self.allowsCameraControl = true
+//        self.allowsCameraControl = true
         self.showsStatistics = true
     }
     
     func reloadData() {
         self.originNode.childNodes.forEach { $0.removeFromParentNode() }
-        setupSetMap()
+        setupSeatMap()
     }
     
     @objc func touchHandler(recognizer : UITapGestureRecognizer) {
@@ -153,22 +153,28 @@ fileprivate extension SASeatBookingView {
         self.scene?.rootNode.addChildNode(self.floorNode)
         let touchHandler = UITapGestureRecognizer(target: self, action: Selector.touchHandler)
         self.addGestureRecognizer(touchHandler)
+        self.cameraControl = SACameraControl(with: self, for: self.cameraNode)
+    }
+    
+    func scenePosition(for node: SCNNode, at seatPosition: SASeatPosition) -> SCNVector3 {
+        let box = node.boundingBox
+        let width = box.max.x - box.min.x
+        let length = box.max.z - box.min.z
+        let (x,z) = seatPosition
+        return SCNVector3Make(Float(x) * (Float(width) + Float(self.seatToSeatDistance.x)) + Float(offset.x),
+                                                -Float(box.min.y),
+                                                -Float(z) * (Float(length)+Float(self.seatToSeatDistance.z)) + Float(offset.y))
+
     }
     
     func seatBookingNode(for node: SCNNode,with position: SASeatPosition) -> SASeatBookingNode {
         let containerNode = SASeatBookingNode(position: position)
         containerNode.addChildNode(node)
-        let box = node.boundingBox
-        let width = box.max.x - box.min.x
-        let length = box.max.z - box.min.z
-        let (x,z) = position
-        containerNode.position = SCNVector3Make(Float(x) * (Float(width) + Float(self.seatToSeatDistance.x)) + Float(offset.x),
-                                                -Float(box.min.y),
-                                                -Float(z) * (Float(length)+Float(self.seatToSeatDistance.z)) + Float(offset.y))
+        containerNode.position = scenePosition(for: node, at: position)
         return containerNode
     }
     
-    func setupSetMap() {
+    func setupSeatMap() {
         guard let seatDataSource = self.seatDataSource
                  else {
             return
@@ -181,7 +187,33 @@ fileprivate extension SASeatBookingView {
                 originNode.addChildNode(containerNode)
             }
         }
-        originNode = originNode.flattenedClone()
+        setupCameraForSize(size: size)
+    }
+    func boundingBox(for size: SASeatBookingSize) -> (min: SCNVector3, max: SCNVector3)? {
+        let sortedNodes = originNode.childNodes.flatMap { $0 as? SASeatBookingNode }.sorted { node1,node2 in
+            let pos1 = node1.seatPosition
+            let pos2 = node2.seatPosition
+            let index1 = pos1.column + pos1.row * size.rows
+            let index2 = pos2.column + pos2.row * size.rows
+            return index1 < index2
+        }
+        switch sortedNodes.count {
+        case 1...:
+            let v1 = sortedNodes[0].position
+            let v2 = sortedNodes[sortedNodes.count-1].position
+            return (min:v1,max:v2)
+        default:
+            return nil
+        }
+    }
+    
+    func setupCameraForSize(size : SASeatBookingSize) {
+        guard let bounds = boundingBox(for: size) else {
+            return
+        }
+        let width = bounds.max.x - bounds.min.x
+        self.cameraNode.position = SCNVector3Make(width/2, 10, 3)
+        self.cameraNode.rotation = SCNVector4Make(1, 0, 0, -Float(60 * Double.pi/180))
     }
 
 }
