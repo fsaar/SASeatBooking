@@ -70,6 +70,13 @@ class SAViewController: UIViewController {
             self.sceneView.seatDelegate = self
         }
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        sceneView = SASeatBookingView(frame: self.view.bounds, options: nil,with: true)
+        view.addSubview(sceneView)
+        sceneView.startAnimation()
+    }
 }
 
 extension SAViewController : SASeatBookingViewDatasource {

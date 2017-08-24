@@ -16,7 +16,7 @@
 		5689E1D21F3B775E00D6AC1C /* SASeatBookingViewIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5689E1D11F3B775E00D6AC1C /* SASeatBookingViewIterator.swift */; };
 		5689E1D71F3CBA2400D6AC1C /* SASeatFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5689E1D61F3CBA2400D6AC1C /* SASeatFactory.swift */; };
 		5689E1DE1F3D638600D6AC1C /* Seat.scn in Resources */ = {isa = PBXBuildFile; fileRef = 5689E1DD1F3D638600D6AC1C /* Seat.scn */; };
-		56EB91DC1F46B3B90099F2B6 /* seatMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56EB91DB1F46B3B90099F2B6 /* seatMap.swift */; };
+		56B3AF431F4F1CA8001BE13E /* SACameraControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B3AF421F4F1CA8001BE13E /* SACameraControl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,7 +32,7 @@
 		5689E1D61F3CBA2400D6AC1C /* SASeatFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SASeatFactory.swift; sourceTree = "<group>"; };
 		5689E1DD1F3D638600D6AC1C /* Seat.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = Seat.scn; sourceTree = "<group>"; };
 		5689E1E01F3D711900D6AC1C /* redCarpet.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = redCarpet.jpg; sourceTree = "<group>"; };
-		56EB91DB1F46B3B90099F2B6 /* seatMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = seatMap.swift; path = SASeatBookingView/seatMap.swift; sourceTree = "<group>"; };
+		56B3AF421F4F1CA8001BE13E /* SACameraControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SACameraControl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,7 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				5632325F1F3A08330032F044 /* AppDelegate.swift */,
-				56EB91DB1F46B3B90099F2B6 /* seatMap.swift */,
 				562874701F46B8E800DC1B01 /* SAViewController.swift */,
 				5689E1D61F3CBA2400D6AC1C /* SASeatFactory.swift */,
 				5689E1D51F3CB9FE00D6AC1C /* SASeatBookingView */,
@@ -85,6 +84,7 @@
 			children = (
 				5689E1D11F3B775E00D6AC1C /* SASeatBookingViewIterator.swift */,
 				563232711F3A09140032F044 /* SASeatBookingView.swift */,
+				56B3AF421F4F1CA8001BE13E /* SACameraControl.swift */,
 			);
 			path = SASeatBookingView;
 			sourceTree = "<group>";
@@ -163,10 +163,10 @@
 			files = (
 				5689E1D71F3CBA2400D6AC1C /* SASeatFactory.swift in Sources */,
 				563232601F3A08330032F044 /* AppDelegate.swift in Sources */,
+				56B3AF431F4F1CA8001BE13E /* SACameraControl.swift in Sources */,
 				563232721F3A09140032F044 /* SASeatBookingView.swift in Sources */,
 				5689E1D21F3B775E00D6AC1C /* SASeatBookingViewIterator.swift in Sources */,
 				562874711F46B8E800DC1B01 /* SAViewController.swift in Sources */,
-				56EB91DC1F46B3B90099F2B6 /* seatMap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
