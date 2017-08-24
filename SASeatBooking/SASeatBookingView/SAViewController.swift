@@ -10,6 +10,52 @@ import UIKit
 import SceneKit
 
 class SAViewController: UIViewController {
+    let seatMap : [[SASeatFactoryType]]  = [
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.space,.space,.space,.space,.space,.space,.space,.space,.space,.space,.space,.space,.space,],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.space,.space,.space,.space,.space,.space,.space,.space,.space,.space,.space,.space,.space,],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.space,.space,.space,.space,.space,.space,.space,.space,.space,.space,.space,.space,.space,],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.available,.available,.occupied,.space,.occupied,.occupied,.occupied,.occupied,.available,.space,.occupied,.occupied,.occupied],
+        [.space,.space,.space,.space,.space,.space,.space,.space,.space,.space,.space,.space,.space,]
+    ]
     var defaultSeatSize = (width: CGFloat(1),height:CGFloat(1),length:CGFloat(1))
     lazy var seatFactory = SASeatFactory()
     var badgeAction : SCNAction = {
