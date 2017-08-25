@@ -56,7 +56,7 @@ class SASeatBookingView: SCNView {
    
     lazy var light : SCNLight = {
         let light = SCNLight()
-        light.intensity = 10
+        light.intensity = 1000
         light.type = .directional
         return light
     }()
@@ -72,7 +72,6 @@ class SASeatBookingView: SCNView {
         camera.zFar = 500
         let cameraNode = SCNNode()
         cameraNode.camera = camera
-        cameraNode.addChildNode(lightNode)
         cameraNode.position = SCNVector3Make(5, 60, 20)
         cameraNode.addChildNode(self.lightNode)
         return cameraNode
@@ -84,9 +83,11 @@ class SASeatBookingView: SCNView {
         let animationCameraNode = SCNNode()
         animationCameraNode.camera = camera
         animationCameraNode.position = SCNVector3Make(-100, 100, 100)
-        animationCameraNode.eulerAngles = SCNVector3(0,-Double.pi / 2,0)
+        animationCameraNode.eulerAngles = SCNVector3(-Double.pi / 4,-Double.pi / 2,0)
         return animationCameraNode
     }()
+    
+
     
     lazy var floorNode : SCNNode = {
         let floorMaterial = SCNMaterial()
@@ -110,14 +111,13 @@ class SASeatBookingView: SCNView {
         super.init(frame: frame, options: options)
         setup(animationEnabled: animationEnabled)
     }
+
+
     
     func startAnimation() {
-        SCNTransaction.begin()
-        SCNTransaction.animationTimingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
-        SCNTransaction.animationDuration = 2
+        animation(with: 2,and: CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut),using: {
             self.pointOfView = self.cameraNode
-            self.light.intensity = 1000
-        SCNTransaction.commit()
+        }, and: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -157,8 +157,22 @@ class SASeatBookingView: SCNView {
     }
     
 }
-
+// MARK: Helper methods
 fileprivate extension SASeatBookingView {
+    func animation(with duration : CFTimeInterval,
+                   and timingFunction : CAMediaTimingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear),
+                   using animationBlock: () ->(),
+                   and completionBlock : (()->())?) {
+        SCNTransaction.begin()
+        SCNTransaction.animationTimingFunction = timingFunction
+        SCNTransaction.animationDuration = duration
+        SCNTransaction.completionBlock = {
+            completionBlock?()
+        }
+        animationBlock()
+        SCNTransaction.commit()
+    }
+    
     func seatNode(for node: SCNNode?) -> SCNNode? {
         guard let bookingNode = node else {
             return nil
@@ -172,6 +186,7 @@ fileprivate extension SASeatBookingView {
     func setup(animationEnabled : Bool = false) {
         self.scene = SCNScene()
         self.scene?.rootNode.addChildNode(self.originNode)
+        self.originNode.addChildNode(lightNode)
         self.scene?.rootNode.addChildNode(self.cameraNode)
         self.scene?.rootNode.addChildNode(self.animationCameraNode)
         self.scene?.rootNode.addChildNode(self.floorNode)
@@ -179,7 +194,7 @@ fileprivate extension SASeatBookingView {
         self.addGestureRecognizer(touchHandler)
         self.cameraControl = SACameraControl(with: self, for: self.cameraNode)
         self.pointOfView = animationEnabled ? self.animationCameraNode : self.cameraNode
-        self.light.intensity = animationEnabled ? 10 : 1000
+        self.light.intensity = animationEnabled ? 1000 : 1000
     }
     
     func scenePosition(for node: SCNNode, at seatPosition: SASeatPosition) -> SCNVector3 {
