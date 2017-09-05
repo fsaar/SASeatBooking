@@ -1,0 +1,12 @@
+language: objective-c
+
+osx_image: xcode9
+script:
+- xcrun  instruments -w "iPhone 7 (11.0) [5BABCDC9-5EAF-4E60-96C0-F78309091348] (Simulator)" || true
+
+- xcodebuild -project SASeatBooking.xcodeproj -scheme SASeatBooking -destination 'platform=iOS Simulator,name=iPhone 7' -sdk iphonesimulator build CODE_SIGNING_REQUIRED=NO  ONLY_ACTIVE_ARCH=NO  RUN_CLANG_STATIC_ANALYZER=YES GCC_TREAT_WARNINGS_AS_ERRORS=YES
+- travis_retry xcodebuild -project SASeatBooking.xcodeproj -scheme SASeatBooking -destination 'platform=iOS Simulator,name=iPhone 7' -sdk iphonesimulator clean test CODE_SIGNING_REQUIRED=NO  ONLY_ACTIVE_ARCH=NO 
+
+notifications:
+  slack: 'samedialabs:$SLACK_SAMEDIALABS_TRAVIS_CI'
+
