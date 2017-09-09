@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/fsaar/SASeatBooking.svg?branch=master)](https://travis-ci.org/fsaar/SASeatBooking)
+[![Travis Build Status](https://travis-ci.org/fsaar/SASeatBooking.svg?branch=master)](https://travis-ci.org/fsaar/SASeatBooking)
+[![Bitrise Build Status](https://www.bitrise.io/app/bdb661c51c14814f/status.svg?token=AAgalx1JK0oiRGhHO5Gf1g&branch=master)](https://www.bitrise.io/app/bdb661c51c14814f)
 
 # SASeatbooking 
 
