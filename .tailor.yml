@@ -1,0 +1,13 @@
+#TAILOR configuration file (https://github.com/sleekbyte/tailor)
+
+only:
+ - upper-camel-case
+ - lower-camel-case
+ - constant-naming
+ - constant-k-prefix
+ - max-file-length 500
+ - max-function-length 50
+ - redundant-parentheses
+ - terminating-semicolon
+ - todo-syntax
+ #- redundant-optional-binding
