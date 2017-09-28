@@ -5,8 +5,8 @@ only:
  - lower-camel-case
  - constant-naming
  - constant-k-prefix
- - max-file-length 500
- - max-function-length 50
+# - max-file-length 500
+# - max-function-length 50
  - redundant-parentheses
  - terminating-semicolon
  - todo-syntax
