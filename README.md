@@ -1,7 +1,7 @@
 [![Travis Build Status](https://travis-ci.org/fsaar/SASeatBooking.svg?branch=master)](https://travis-ci.org/fsaar/SASeatBooking)
 [![Bitrise Build Status](https://www.bitrise.io/app/bdb661c51c14814f/status.svg?token=AAgalx1JK0oiRGhHO5Gf1g&branch=master)](https://www.bitrise.io/app/bdb661c51c14814f)
 [![Code Climate](https://codeclimate.com/github/fsaar/SASeatBooking/badges/gpa.svg)](https://codeclimate.com/github/fsaar/SASeatBooking)
-
+[![codebeat badge](https://codebeat.co/badges/b657f704-2220-4e19-9cb6-65e77dc13214)](https://codebeat.co/projects/github-com-fsaar-saseatbooking-master)
 
 # SASeatbooking 
 
