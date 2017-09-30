@@ -95,18 +95,6 @@ class SASeatBookingView: SCNView {
         return cameraNode
     }()
     
-    lazy var cameraNode2 : SCNNode = {
-        let camera = SCNCamera()
-        camera.zFar = 500
-        let cameraNode = SCNNode()
-        cameraNode.camera = camera
-        cameraNode.position = SCNVector3Make(5, 60, 20)
-        return cameraNode
-    }()
-    
-    var otherCamera : SCNNode {
-        return self.pointOfView === cameraNode ? cameraNode2 : cameraNode
-    }
 
     lazy var animationCameraNode : SCNNode = {
         let camera = SCNCamera()
@@ -156,7 +144,6 @@ class SASeatBookingView: SCNView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
-//        self.allowsCameraControl = true
         self.showsStatistics = true
     }
     
@@ -210,7 +197,6 @@ fileprivate extension SASeatBookingView {
         self.scene?.rootNode.addChildNode(self.originNode)
         self.originNode.addChildNode(lightNode)
         self.scene?.rootNode.addChildNode(self.cameraNode)
-        self.scene?.rootNode.addChildNode(self.cameraNode2)
         self.scene?.rootNode.addChildNode(self.animationCameraNode)
         self.scene?.rootNode.addChildNode(self.floorNode)
         
