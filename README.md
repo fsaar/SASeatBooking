@@ -1,3 +1,4 @@
+![](https://img.shields.io/badge/Swift-4.0-orange.svg)
 [![Travis Build Status](https://travis-ci.org/fsaar/SASeatBooking.svg?branch=master)](https://travis-ci.org/fsaar/SASeatBooking)
 [![Bitrise Build Status](https://www.bitrise.io/app/bdb661c51c14814f/status.svg?token=AAgalx1JK0oiRGhHO5Gf1g&branch=master)](https://www.bitrise.io/app/bdb661c51c14814f)
 [![Code Climate](https://codeclimate.com/github/fsaar/SASeatBooking/badges/gpa.svg)](https://codeclimate.com/github/fsaar/SASeatBooking)
