@@ -10,7 +10,7 @@ typealias SASeatBookingSize = (columns: Int,rows :Int)
 
 extension SCNTransaction {
     static func animation(with duration : CFTimeInterval,
-                   and timingFunction : CAMediaTimingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear),
+                   and timingFunction : CAMediaTimingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear),
                    using animationBlock: () ->(),
                    and completionBlock : (()->())? = nil) {
         self.begin()
@@ -136,7 +136,7 @@ class SASeatBookingView: SCNView {
 
     
     func startAnimation() {
-        SCNTransaction.animation(with: 1.5,and: CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut),using:  {
+        SCNTransaction.animation(with: 1.5,and: CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut),using:  {
             self.pointOfView = self.cameraNode
         })
     }
@@ -161,7 +161,7 @@ class SASeatBookingView: SCNView {
     }
     
     func handleSelection(results : [SCNHitTestResult]) {
-        let nodes = results.flatMap({ self.seatNode(for: $0.node) as? SASeatBookingNode })
+        let nodes = results.compactMap { self.seatNode(for: $0.node) as? SASeatBookingNode }
             .filter { node in
                 let position = node.seatPosition
                 let canSelect = self.seatDelegate?.seatBookingView(self, canSelectSeatAt: position) ?? false
@@ -240,7 +240,7 @@ fileprivate extension SASeatBookingView {
         }
     }
     func boundingBox(for size: SASeatBookingSize) -> (min: SCNVector3, max: SCNVector3)? {
-        let sortedNodes = originNode.childNodes.flatMap { $0 as? SASeatBookingNode }.sorted { node1,node2 in
+        let sortedNodes = originNode.childNodes.compactMap { $0 as? SASeatBookingNode }.sorted { node1,node2 in
             let pos1 = node1.seatPosition
             let pos2 = node2.seatPosition
             let index1 = pos1.column + pos1.row * size.rows

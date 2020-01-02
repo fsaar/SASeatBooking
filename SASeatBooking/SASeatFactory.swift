@@ -96,7 +96,7 @@ extension SASeatFactory {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.alignment = .center
             
-            let attrs = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 36), NSAttributedStringKey.paragraphStyle: paragraphStyle,NSAttributedStringKey.foregroundColor: UIColor(red: 200, green: 200, blue: 100, alpha: 1.0)]
+            let attrs = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 36), NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.foregroundColor: UIColor(red: 200, green: 200, blue: 100, alpha: 1.0)]
             title.draw(with: bounds, options: .usesLineFragmentOrigin, attributes: attrs, context: nil)
         }
     }

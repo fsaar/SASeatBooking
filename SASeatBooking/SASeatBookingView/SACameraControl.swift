@@ -49,7 +49,7 @@ class SACameraControl {
         let velocity = recognizer.velocity(in: recognizer.view)
         switch recognizer.numberOfTouches {
         case 1:
-            let v = float2(Float(velocity.x),Float(velocity.y))
+            let v = SIMD2<Float>(Float(velocity.x),Float(velocity.y))
             let normalized = simd_normalize(v)
             let vector = SCNVector3Make(normalized.x/5,0 , normalized.y/5)
             let action = SCNAction.move(by: vector, duration: 0.1)
