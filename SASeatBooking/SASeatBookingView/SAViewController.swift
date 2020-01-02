@@ -82,7 +82,7 @@ class SAViewController: UIViewController {
             self.view.leadingAnchor.constraint(equalTo: sceneView.leadingAnchor),
             self.view.trailingAnchor.constraint(equalTo: sceneView.trailingAnchor),
             self.view.bottomAnchor.constraint(equalTo: sceneView.bottomAnchor),
-            self.view.topAnchor.constraint(equalTo: sceneView.topAnchor,constant: 20),
+            self.view.topAnchor.constraint(equalTo: sceneView.topAnchor,constant: 40),
         ])
         sceneView.startAnimation()
     }
