@@ -2,7 +2,6 @@
 import Foundation
 import UIKit
 import SceneKit
-import SceneKit.ModelIO
 
 typealias SASeatPosition = (column: Int,row: Int)
 typealias SASeatBookingSize = (columns: Int,rows :Int)
@@ -10,7 +9,7 @@ typealias SASeatBookingSize = (columns: Int,rows :Int)
 
 extension SCNTransaction {
     static func animation(with duration : CFTimeInterval,
-                   and timingFunction : CAMediaTimingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear),
+                   and timingFunction : CAMediaTimingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear),
                    using animationBlock: () ->(),
                    and completionBlock : (()->())? = nil) {
         self.begin()
@@ -26,12 +25,12 @@ extension SCNTransaction {
 
 
 
-protocol SASeatBookingViewDatasource : class {
+protocol SASeatBookingViewDatasource : AnyObject {
     func numberOfRowsAndColumnsInSeatBookingView(_ view : SASeatBookingView) -> SASeatBookingSize
     func seatBookingView(_ view: SASeatBookingView,nodeAt position:  SASeatPosition) -> SCNNode?
 }
 
-protocol SASeatBookingViewDelegate : class {
+protocol SASeatBookingViewDelegate : AnyObject {
     func seatBookingView(_ view: SASeatBookingView,canSelectSeatAt position: SASeatPosition) -> Bool
     func seatBookingView(_ view: SASeatBookingView,didSelect seat : SCNNode,  at position: SASeatPosition)
     func seatBookingView(_ view: SASeatBookingView,didDeselect seat : SCNNode, at position: SASeatPosition)
@@ -49,7 +48,7 @@ fileprivate extension Selector {
 }
 
 class SASeatBookingView: SCNView {
-    class SASeatBookingNode : SCNNode {
+    fileprivate class SASeatBookingNode : SCNNode {
         let seatPosition :  SASeatPosition
         var selected : Bool = false
         init(position : SASeatPosition) {
@@ -62,31 +61,31 @@ class SASeatBookingView: SCNView {
             
         }
     }
-    var cameraControl : SACameraControl?
-    let offset = CGPoint.zero
-    let seatToSeatDistance = (x:CGFloat(0.2),z:CGFloat(1))
-    lazy var originNode : SCNNode = SCNNode()
-    lazy var selectAction : SCNAction = {
+    fileprivate var cameraControl : SACameraControl?
+    fileprivate let offset = CGPoint.zero
+    fileprivate let seatToSeatDistance = (x:CGFloat(0.2),z:CGFloat(1))
+    fileprivate lazy var originNode : SCNNode = SCNNode()
+    fileprivate lazy var selectAction : SCNAction = {
        let moveUp = SCNAction.move(by: SCNVector3Make(0, 0.5, 0), duration: 1)
         moveUp.timingMode = .easeOut
         return moveUp
     }()
    
-    lazy var light : SCNLight = {
+    fileprivate lazy var light : SCNLight = {
         let light = SCNLight()
         light.intensity = 1000
         light.type = .omni
         return light
     }()
     
-    lazy var lightNode : SCNNode = {
+    fileprivate lazy var lightNode : SCNNode = {
         let lightNode = SCNNode()
         lightNode.light = light
         lightNode.position = SCNVector3Make(0, 10, 0)
         return lightNode
     }()
     
-    lazy var cameraNode : SCNNode = {
+    fileprivate lazy var cameraNode : SCNNode = {
         let camera = SCNCamera()
         camera.zFar = 500
         let cameraNode = SCNNode()
@@ -96,7 +95,7 @@ class SASeatBookingView: SCNView {
     }()
     
 
-    lazy var animationCameraNode : SCNNode = {
+    fileprivate lazy var animationCameraNode : SCNNode = {
         let camera = SCNCamera()
         camera.zFar = 500
         let animationCameraNode = SCNNode()
@@ -106,9 +105,7 @@ class SASeatBookingView: SCNView {
         return animationCameraNode
     }()
     
-
-    
-    lazy var floorNode : SCNNode = {
+    fileprivate lazy var floorNode : SCNNode = {
         let floorMaterial = SCNMaterial()
     
         let floor = SCNFloor()
@@ -136,9 +133,10 @@ class SASeatBookingView: SCNView {
 
     
     func startAnimation() {
-        SCNTransaction.animation(with: 1.5,and: CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut),using:  {
+        let timingFn = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
+        SCNTransaction.animation(with: 1.5,and: timingFn,using:  {
             self.pointOfView = self.cameraNode
-        })
+        },and: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -159,14 +157,19 @@ class SASeatBookingView: SCNView {
         let results = renderer.hitTest(p, options: nil)
         handleSelection(results: results)
     }
-    
+}
+
+//
+// MARK: - Helper methods
+//
+fileprivate extension SASeatBookingView {
     func handleSelection(results : [SCNHitTestResult]) {
-        let nodes = results.flatMap({ self.seatNode(for: $0.node) as? SASeatBookingNode })
+        let nodes = results.compactMap { self.seatNode(for: $0.node) as? SASeatBookingNode }
             .filter { node in
-                let position = node.seatPosition
-                let canSelect = self.seatDelegate?.seatBookingView(self, canSelectSeatAt: position) ?? false
-                return canSelect
-        }
+                        let position = node.seatPosition
+                        let canSelect = self.seatDelegate?.seatBookingView(self, canSelectSeatAt: position) ?? false
+                        return canSelect
+            }
         if let seatNode = nodes.first, let node = seatNode.childNodes.first {
             if !seatNode.selected {
                 seatNode.selected = true
@@ -181,9 +184,6 @@ class SASeatBookingView: SCNView {
         }
 
     }
-}
-// MARK: Helper methods
-fileprivate extension SASeatBookingView {
     
     func seatNode(for node: SCNNode?) -> SCNNode? {
         guard let bookingNode = node else {
@@ -240,7 +240,7 @@ fileprivate extension SASeatBookingView {
         }
     }
     func boundingBox(for size: SASeatBookingSize) -> (min: SCNVector3, max: SCNVector3)? {
-        let sortedNodes = originNode.childNodes.flatMap { $0 as? SASeatBookingNode }.sorted { node1,node2 in
+        let sortedNodes = originNode.childNodes.compactMap { $0 as? SASeatBookingNode }.sorted { node1,node2 in
             let pos1 = node1.seatPosition
             let pos2 = node2.seatPosition
             let index1 = pos1.column + pos1.row * size.rows
@@ -265,5 +265,4 @@ fileprivate extension SASeatBookingView {
         self.cameraNode.position = SCNVector3Make(width/2, 10, 10)
         self.cameraNode.rotation = SCNVector4Make(1, 0, 0, -Float(30 * Double.pi/180))
     }
-
 }

@@ -22,6 +22,7 @@ class SASeatFactory {
         let seat = self.seat(with : #imageLiteral(resourceName: "redchenille"))
         return seat
     }()
+    
     lazy var availableSeatNode : SCNNode? = {
         let seat =  self.seat(with : #imageLiteral(resourceName: "greenChenille"))
         return seat
@@ -36,12 +37,7 @@ class SASeatFactory {
         updateBadge(of: node,with:label)
         return node
     }
-
-}
-
-/// MARK: Helper
-
-extension SASeatFactory {
+    
     var body : SCNNode?  {
         let url = Bundle.main.url(forResource: "Seat", withExtension: "scn")
         guard let seatURL = url,let scene = try? SCNScene(url: seatURL, options: nil) else {
@@ -50,7 +46,12 @@ extension SASeatFactory {
         let bodyNode = scene.rootNode.childNode(withName: "body", recursively: true)
         return bodyNode
     }
-    
+}
+
+//
+// MARK: - Helper
+//
+fileprivate extension SASeatFactory {
     func node(with type : SASeatFactoryType) -> SCNNode? {
         switch type {
         case .available:
@@ -96,7 +97,7 @@ extension SASeatFactory {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.alignment = .center
             
-            let attrs = [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 36), NSAttributedStringKey.paragraphStyle: paragraphStyle,NSAttributedStringKey.foregroundColor: UIColor(red: 200, green: 200, blue: 100, alpha: 1.0)]
+            let attrs = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 36), NSAttributedString.Key.paragraphStyle: paragraphStyle,NSAttributedString.Key.foregroundColor: UIColor(red: 200, green: 200, blue: 100, alpha: 1.0)]
             title.draw(with: bounds, options: .usesLineFragmentOrigin, attributes: attrs, context: nil)
         }
     }

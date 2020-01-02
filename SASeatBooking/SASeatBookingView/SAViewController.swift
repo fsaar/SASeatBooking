@@ -58,9 +58,9 @@ fileprivate let seatMap : [[SASeatFactoryType]]  = [
 
 class SAViewController: UIViewController {
     
-    var defaultSeatSize = (width: CGFloat(1),height:CGFloat(1),length:CGFloat(1))
-    lazy var seatFactory = SASeatFactory()
-    var badgeAction : SCNAction = {
+    fileprivate var defaultSeatSize = (width: CGFloat(1),height:CGFloat(1),length:CGFloat(1))
+    fileprivate lazy var seatFactory = SASeatFactory()
+    fileprivate var badgeAction : SCNAction = {
         let action1 = SCNAction.move(by: SCNVector3Make(0, 0.5, 0.5), duration: 0.25)
         let action2 = SCNAction.move(by: SCNVector3Make(0, 1, -1), duration: 0.5)
         let action = SCNAction.sequence([action1,action2])
@@ -76,7 +76,14 @@ class SAViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         sceneView = SASeatBookingView(frame: self.view.bounds, options: nil,with: true)
+        sceneView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(sceneView)
+        NSLayoutConstraint.activate([
+            self.view.leadingAnchor.constraint(equalTo: sceneView.leadingAnchor),
+            self.view.trailingAnchor.constraint(equalTo: sceneView.trailingAnchor),
+            self.view.bottomAnchor.constraint(equalTo: sceneView.bottomAnchor),
+            self.view.topAnchor.constraint(equalTo: sceneView.topAnchor,constant: 20),
+        ])
         sceneView.startAnimation()
     }
 }
@@ -89,7 +96,7 @@ extension SAViewController : SASeatBookingViewDatasource {
     func seatBookingView(_ view: SASeatBookingView,nodeAt position:  SASeatPosition) -> SCNNode? {
         let row = seatMap[position.row]
         let type = row[position.column]
-        let columnOffset = row[0..<position.column].filter ({ $0 == .space }).count
+        let columnOffset = row[0..<position.column].filter{ $0 == .space }.count
         let labelPosition = (column: position.column - columnOffset,row: position.row)
         let seatLabel = self.label(for: labelPosition)
         guard type != .space, let seat = self.seatFactory.seatNode(of: type,with: seatLabel) else {
@@ -114,8 +121,10 @@ extension SAViewController : SASeatBookingViewDelegate {
     }
 }
 
-/// MARK : Help
-extension SAViewController {
+//
+// MARK: - Helper
+//
+fileprivate extension SAViewController {
     func addBodyIfNeedBe(to node: SCNNode) {
         if case .none =  node.childNode(withName: SASeatFactoryLabel.body.rawValue, recursively: true) {
             if let body = self.seatFactory.body {
@@ -143,7 +152,4 @@ extension SAViewController {
         let label = "\(position.row+1)\(letter)"
         return label
     }
-    
 }
-
-

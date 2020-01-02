@@ -1,0 +1,196 @@
+disabled_rules: # rule identifiers to exclude from running
+    - attributes                               
+    - closure_parameter_position               
+    - colon                                    
+    - comma                                    
+    - compiler_protocol_init                   
+    - conditional_returns_on_newline           
+    - convenience_type                         
+    - discouraged_object_literal               
+    - discouraged_optional_boolean             
+    - discouraged_optional_collection          
+    - dynamic_inline                           
+    - empty_xctest_method                      
+    - explicit_acl                             
+    - explicit_enum_raw_value                  
+    - explicit_top_level_acl                   
+    - explicit_type_interface                  
+    - extension_access_modifier                
+    - fatal_error_message                      
+    - file_header                              
+    - file_length                              
+    - file_name                                
+    - function_default_parameter_at_end        
+    - function_parameter_count                 
+    - generic_type_name                        
+    - identifier_name                          
+    - joined_default_parameter                 
+    - leading_whitespace                       
+    - let_var_whitespace                       
+    - line_length                              
+    - literal_expression_end_indentation       
+    - lower_acl_than_parent                    
+    - modifier_order                           
+    - multiline_arguments                      
+    - multiline_function_chains                
+    - multiline_parameters                     
+    - no_extension_access_modifier             
+    - no_grouping_extension                    
+    - number_separator                         
+    - object_literal                           
+    - opening_brace                            
+    - operator_usage_whitespace                
+    - operator_whitespace                      
+    - pattern_matching_keywords                
+    - prefixed_toplevel_constant               
+    - private_action                           
+    - private_outlet                           
+    - private_over_fileprivate                 
+    - private_unit_test                        
+    - protocol_property_accessors_order        
+    - redundant_optional_initialization        
+    - redundant_set_access_control             
+    - redundant_string_enum_value                                
+    - return_arrow_whitespace                  
+    - single_test_class                        
+    - sorted_imports                           
+    - statement_position                       
+    - strict_fileprivate                       
+    - trailing_comma                           
+    - type_name                                
+    - unavailable_function                     
+    - untyped_error_in_catch                   
+    - valid_ibinspectable                      
+    - vertical_parameter_alignment             
+    - vertical_parameter_alignment_on_call     
+    - vertical_whitespace                      
+    - void_return                              
+    - xctfail_message                          
+    - force_unwrapping                         
+    - trailing_whitespace                      
+    - multiple_closures_with_trailing_closure  
+    - nesting                                  
+    - large_tuple                              
+    - strong_iboutlet
+    - unused_optional_binding  
+opt_in_rules:
+    - empty_collection_literal
+    - contains_over_filter_count
+    - contains_over_filter_is_empty
+    - unused_declaration
+    - closing_brace                             
+    - custom_rules                             
+    - closure_spacing                          
+    - collection_alignment
+    - switch_case_on_newline                   
+    - discouraged_direct_init                  
+    - reduce_boolean
+    - unowned_variable_capture
+    - unused_capture_list
+    - redundant_type_annotation
+    - anyobject_protocol
+    - deployment_target
+    - duplicate_imports
+    - unused_setter_value
+    - only_single_muted_parameter
+    - last_where
+    - first_where
+    - unused_control_flow_label
+    - redundant_objc_attribute
+    - legacy_hashing
+    - static_operator
+    - identical_operands
+    - unused_import
+    - explicit_init                            
+    - block_based_kvo                          
+    - contains_over_first_not_nil              
+    - control_statement                        
+    - required_enum_case                       
+    - trailing_closure                         
+    - discarded_notification_center_observer   
+    - implicit_return                          
+    - closure_end_indentation                  
+    - implicitly_unwrapped_optional            
+    - cyclomatic_complexity                    
+    - implicit_getter                          
+    - is_disjoint                          
+    - yoda_condition
+    - unneeded_break_in_switch                 
+    - empty_enum_arguments                     
+    - empty_parameters                         
+    - empty_parentheses_with_trailing_closure  
+    - empty_string                             
+    - array_init
+    - for_where                                
+    - function_body_length                     
+    - legacy_cggeometry_functions              
+    - legacy_constant                          
+    - legacy_constructor                       
+    - legacy_nsgeometry_functions              
+    - mark                                     
+    - switch_case_alignment                    
+    - notification_center_detachment           
+    - sorted_first_last                        
+    - override_in_extension
+    - no_fallthrough_only
+    - shorthand_operator                       
+    - overridden_super_call                    
+    - todo                                     
+    - unused_closure_parameter                 
+    - unused_enumerated                        
+    - syntactic_sugar                          
+    - weak_delegate                            
+    - empty_count
+    - force_cast                               
+    - force_try                                
+    - trailing_semicolon 
+    - redundant_discardable_let                
+    - redundant_nil_coalescing    
+    - fallthrough  
+    - trailing_newline 
+    - class_delegate_protocol 
+    - redundant_void_return                  
+    - type_body_length                         
+    - prohibited_super_call                    
+    - unneeded_parentheses_in_closure_argument 
+
+included: # paths to include during linting. `--path` is ignored if present.
+    - SASeatBooking
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+    - Pods
+ 
+# configurable rules can be customized from this configuration file
+# binary rules can set their severity level
+weak_delegate: error
+force_cast: error 
+force_try: error 
+overridden_super_call: error
+cyclomatic_complexity: 
+  - 15
+  - 15
+# they can set both implicitly with an array
+type_body_length:
+  - 160 # warning
+  - 200 # error
+# or they can set both explicitly
+file_length:
+  warning: 500
+  error: 500
+# naming rules can set warnings/errors for min_length and max_length
+# additionally they can set excluded names
+type_name:
+  min_length: 4 # only warning
+  max_length: # warning and error
+    warning: 40
+    error: 50
+  excluded: iPhone # excluded via string
+identifier_name:
+  min_length: # only min_length
+    error: 4 # only error
+#  excluded: # excluded via string array
+#    - id
+#    - URL
+#    - GlobalAPIKey
+reporter: "xcode" # reporter type (xcode, json, csv, checkstyle, junit, html, emoji)
+
+
