@@ -17,9 +17,11 @@
 		5689E1D71F3CBA2400D6AC1C /* SASeatFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5689E1D61F3CBA2400D6AC1C /* SASeatFactory.swift */; };
 		5689E1DE1F3D638600D6AC1C /* Seat.scn in Resources */ = {isa = PBXBuildFile; fileRef = 5689E1DD1F3D638600D6AC1C /* Seat.scn */; };
 		56B3AF431F4F1CA8001BE13E /* SACameraControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56B3AF421F4F1CA8001BE13E /* SACameraControl.swift */; };
+		C1C86C2F50A9B605C66987B9 /* libPods-SASeatBooking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D72FF233C8F2490AD1C292DD /* libPods-SASeatBooking.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0ADC531EF883B7AF4E460D77 /* Pods-SASeatBooking.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SASeatBooking.release.xcconfig"; path = "Target Support Files/Pods-SASeatBooking/Pods-SASeatBooking.release.xcconfig"; sourceTree = "<group>"; };
 		562874701F46B8E800DC1B01 /* SAViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SAViewController.swift; path = SASeatBookingView/SAViewController.swift; sourceTree = "<group>"; };
 		5632325C1F3A08330032F044 /* SASeatBooking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SASeatBooking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5632325F1F3A08330032F044 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -31,8 +33,9 @@
 		5689E1D11F3B775E00D6AC1C /* SASeatBookingViewIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SASeatBookingViewIterator.swift; sourceTree = "<group>"; };
 		5689E1D61F3CBA2400D6AC1C /* SASeatFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SASeatFactory.swift; sourceTree = "<group>"; };
 		5689E1DD1F3D638600D6AC1C /* Seat.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = Seat.scn; sourceTree = "<group>"; };
-		5689E1E01F3D711900D6AC1C /* redCarpet.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = redCarpet.jpg; sourceTree = "<group>"; };
 		56B3AF421F4F1CA8001BE13E /* SACameraControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SACameraControl.swift; sourceTree = "<group>"; };
+		959E468FA42936F5BDD85BF6 /* Pods-SASeatBooking.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SASeatBooking.debug.xcconfig"; path = "Target Support Files/Pods-SASeatBooking/Pods-SASeatBooking.debug.xcconfig"; sourceTree = "<group>"; };
+		D72FF233C8F2490AD1C292DD /* libPods-SASeatBooking.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SASeatBooking.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C1C86C2F50A9B605C66987B9 /* libPods-SASeatBooking.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,6 +55,8 @@
 			children = (
 				5632325E1F3A08330032F044 /* SASeatBooking */,
 				5632325D1F3A08330032F044 /* Products */,
+				6CB41287AFC02755DBF241AE /* Pods */,
+				E722FD92AF390018A3318AD7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -72,7 +78,6 @@
 				563232631F3A08330032F044 /* Main.storyboard */,
 				563232661F3A08330032F044 /* Assets.xcassets */,
 				5689E1DD1F3D638600D6AC1C /* Seat.scn */,
-				5689E1E01F3D711900D6AC1C /* redCarpet.jpg */,
 				563232681F3A08330032F044 /* LaunchScreen.storyboard */,
 				5632326B1F3A08330032F044 /* Info.plist */,
 			);
@@ -89,6 +94,23 @@
 			path = SASeatBookingView;
 			sourceTree = "<group>";
 		};
+		6CB41287AFC02755DBF241AE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				959E468FA42936F5BDD85BF6 /* Pods-SASeatBooking.debug.xcconfig */,
+				0ADC531EF883B7AF4E460D77 /* Pods-SASeatBooking.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		E722FD92AF390018A3318AD7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D72FF233C8F2490AD1C292DD /* libPods-SASeatBooking.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -96,9 +118,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5632326E1F3A08330032F044 /* Build configuration list for PBXNativeTarget "SASeatBooking" */;
 			buildPhases = (
+				83245BB2F2EF3AD080825A3B /* [CP] Check Pods Manifest.lock */,
 				563232581F3A08330032F044 /* Sources */,
 				563232591F3A08330032F044 /* Frameworks */,
 				5632325A1F3A08330032F044 /* Resources */,
+				5678023D23BE113B00C4C341 /* Swift Lint */,
 			);
 			buildRules = (
 			);
@@ -156,6 +180,49 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5678023D23BE113B00C4C341 /* Swift Lint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Swift Lint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		83245BB2F2EF3AD080825A3B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SASeatBooking-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		563232581F3A08330032F044 /* Sources */ = {
@@ -302,6 +369,7 @@
 		};
 		5632326F1F3A08330032F044 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 959E468FA42936F5BDD85BF6 /* Pods-SASeatBooking.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = RF4LJPC23U;
@@ -316,6 +384,7 @@
 		};
 		563232701F3A08330032F044 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0ADC531EF883B7AF4E460D77 /* Pods-SASeatBooking.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = RF4LJPC23U;

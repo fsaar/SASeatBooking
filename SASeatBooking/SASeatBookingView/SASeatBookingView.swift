@@ -2,7 +2,6 @@
 import Foundation
 import UIKit
 import SceneKit
-import SceneKit.ModelIO
 
 typealias SASeatPosition = (column: Int,row: Int)
 typealias SASeatBookingSize = (columns: Int,rows :Int)
@@ -26,12 +25,12 @@ extension SCNTransaction {
 
 
 
-protocol SASeatBookingViewDatasource : class {
+protocol SASeatBookingViewDatasource : AnyObject {
     func numberOfRowsAndColumnsInSeatBookingView(_ view : SASeatBookingView) -> SASeatBookingSize
     func seatBookingView(_ view: SASeatBookingView,nodeAt position:  SASeatPosition) -> SCNNode?
 }
 
-protocol SASeatBookingViewDelegate : class {
+protocol SASeatBookingViewDelegate : AnyObject {
     func seatBookingView(_ view: SASeatBookingView,canSelectSeatAt position: SASeatPosition) -> Bool
     func seatBookingView(_ view: SASeatBookingView,didSelect seat : SCNNode,  at position: SASeatPosition)
     func seatBookingView(_ view: SASeatBookingView,didDeselect seat : SCNNode, at position: SASeatPosition)
@@ -136,9 +135,10 @@ class SASeatBookingView: SCNView {
 
     
     func startAnimation() {
-        SCNTransaction.animation(with: 1.5,and: CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut),using:  {
+        let timingFn = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
+        SCNTransaction.animation(with: 1.5,and: timingFn,using:  {
             self.pointOfView = self.cameraNode
-        })
+        },and: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -163,10 +163,10 @@ class SASeatBookingView: SCNView {
     func handleSelection(results : [SCNHitTestResult]) {
         let nodes = results.compactMap { self.seatNode(for: $0.node) as? SASeatBookingNode }
             .filter { node in
-                let position = node.seatPosition
-                let canSelect = self.seatDelegate?.seatBookingView(self, canSelectSeatAt: position) ?? false
-                return canSelect
-        }
+                        let position = node.seatPosition
+                        let canSelect = self.seatDelegate?.seatBookingView(self, canSelectSeatAt: position) ?? false
+                        return canSelect
+            }
         if let seatNode = nodes.first, let node = seatNode.childNodes.first {
             if !seatNode.selected {
                 seatNode.selected = true

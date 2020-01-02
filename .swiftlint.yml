@@ -155,7 +155,7 @@ opt_in_rules:
     - unneeded_parentheses_in_closure_argument 
 
 included: # paths to include during linting. `--path` is ignored if present.
-    - tflapp
+    - SASeatBooking
 excluded: # paths to ignore during linting. Takes precedence over `included`.
     - Pods
  
