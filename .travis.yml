@@ -1,10 +1,11 @@
 language: objective-c
 
 osx_image: xcode11.3
+
 script:
 - xcrun  instruments -w "iPhone X (11.0.1) [EBB87065-45FC-4682-B317-A16D9CE2926D] (Simulator)" || true
 
-- xcodebuild -workspace SASeatBooking.xcworkspace -scheme SASeatBooking -destination 'platform=iOS Simulator,name=iPhone 8' -sdk iphonesimulator
+- xcodebuild -workspace SASeatBooking.xcworkspace -scheme SASeatBooking -destination 'platform=iOS Simulator,name=iPhone 8' -sdk iphonesimulator build CODE_SIGNING_REQUIRED=NO  ONLY_ACTIVE_ARCH=NO  RUN_CLANG_STATIC_ANALYZER=YES GCC_TREAT_WARNINGS_AS_ERRORS=YES
 
 notifications:
   slack: 'samedialabs:$SLACK_SAMEDIALABS_TRAVIS_CI'
